@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\mahasiswaController;
 use App\Http\Controllers\ProdiController;
@@ -10,6 +10,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+
+Route::middleware('auth:sanctum')->get('fakultas', [FakultasController::class, 'index']);
 Route::get('/fakultas',[FakultasController::class, 'index']);
 Route::get('/prodi',[ProdiController::class, 'index']);
 Route::get('/mahasiswa',[mahasiswaController::class, 'index']);
@@ -18,3 +20,6 @@ Route::post('/prodi', [ProdiController::class, 'store']);
 Route::post('/mahasiswa', [mahasiswaController::class, 'store']);
 Route::patch(uri:'/prodi/{prodi}', action: [ProdiController::class,'update']);
 Route::delete(uri:'/fakultas/{fakultas}',action:[FakultasController::class,'update']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+
